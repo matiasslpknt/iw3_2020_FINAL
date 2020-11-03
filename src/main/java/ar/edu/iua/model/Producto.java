@@ -1,32 +1,14 @@
 package ar.edu.iua.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "productos")
-@SqlResultSetMapping(
-        name="productomap",
-        classes = {
-                @ConstructorResult(
-                        columns = {
-                                @ColumnResult(name = "p.nombre", type = String.class),
-                                @ColumnResult(name = "p.descripcion", type = String.class),
-                                @ColumnResult(name = "p.precio_lista", type = double.class)
-                        },
-                        targetClass = ProductoDTO.class
-                )
-        }
-)
 public class Producto implements Serializable {
 
-    private static final long serialVersionUID = 451621105748580924L;
+    private static final long serialVersionUID = -8491686541555085962L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,43 +18,19 @@ public class Producto implements Serializable {
     private String nombre;
     @Column(length = 250)
     private String descripcion;
-    private double precioLista;
-    @Column(columnDefinition = "TINYINT DEFAULT 0")
-    private boolean enStock;
+    private double precio;
 
-
-
-    @OneToOne(cascade =  CascadeType.ALL)
-    private ProductoDetalle productoDetalle;
-
-
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "proveedor_id")
-    private Proveedor proveedor;
-
-
-
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "producto_ingrediente_detalle",
-            joinColumns = @JoinColumn(name = "producto_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "ingrediente_id", referencedColumnName = "id"))
-    private List<Ingrediente> ingredienteList;
-
-    @ManyToMany(targetEntity = Venta.class, mappedBy = "productoList")
-    @JsonBackReference
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(name = "producto_venta_detalle",
-//            joinColumns = @JoinColumn(name = "producto_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "venta_id", referencedColumnName = "id"))
-    private List<Venta> ventaList;
-
-    public Producto(String nombre, String descripcion, double precioLista) {
+    public Producto(String nombre, String descripcion, double precio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioLista = precioLista;
+        this.precio = precio;
     }
 
     public Producto() {
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Long getId() {
@@ -99,51 +57,13 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public double getPrecioLista() {
-        return precioLista;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setPrecioLista(double precioLista) {
-        this.precioLista = precioLista;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
-    public boolean isEnStock() {
-        return enStock;
-    }
 
-    public void setEnStock(boolean enStock) {
-        this.enStock = enStock;
-    }
-
-    public ProductoDetalle getProductoDetalle() {
-        return productoDetalle;
-    }
-
-    public void setProductoDetalle(ProductoDetalle productoDetalle) {
-        this.productoDetalle = productoDetalle;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public List<Ingrediente> getIngredienteList() {
-        return ingredienteList;
-    }
-
-    public void setIngredienteList(List<Ingrediente> ingredienteList) {
-        this.ingredienteList = ingredienteList;
-    }
-
-    public List<Venta> getVentaList() {
-        return ventaList;
-    }
-
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
-    }
 }
