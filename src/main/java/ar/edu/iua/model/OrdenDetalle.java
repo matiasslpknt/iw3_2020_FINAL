@@ -24,6 +24,10 @@ public class OrdenDetalle implements Serializable {
 
     private double caudal;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "orden_id")
+    private Orden orden;
+
     public long getId() {
         return id;
     }
@@ -72,5 +76,13 @@ public class OrdenDetalle implements Serializable {
 
     public void setCaudal(double caudal) {
         this.caudal = caudal;
+    }
+
+    public Orden getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Orden orden) {
+        this.orden = orden;
     }
 }
