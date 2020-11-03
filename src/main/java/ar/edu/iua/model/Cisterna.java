@@ -16,14 +16,11 @@ public class Cisterna implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-
     private Double capacidad;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "camion_id")
+    @ManyToMany(targetEntity = Camion.class, mappedBy = "cisternaList")
     @JsonBackReference
-    private Camion camion;
+    private List<Camion> camionList;
 
 
     public long getId() {
@@ -45,11 +42,11 @@ public class Cisterna implements Serializable {
         this.capacidad = capacidad;
     }
 
-    public Camion getCamion() {
-        return camion;
+    public List<Camion> getCamionList() {
+        return camionList;
     }
 
-    public void setCamion(Camion camion) {
-        this.camion = camion;
+    public void setCamionList(List<Camion> camionList) {
+        this.camionList = camionList;
     }
 }

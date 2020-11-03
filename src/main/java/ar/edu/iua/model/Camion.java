@@ -18,7 +18,10 @@ public class Camion implements Serializable {
 
     private String dominio;
 
-    @OneToMany(targetEntity=Cisterna.class, mappedBy="camion", fetch = FetchType.LAZY)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "camion_cisterna_detalle",
+            joinColumns = @JoinColumn(name = "camion_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "cisterna_id", referencedColumnName = "id"))
     private List<Cisterna> cisternaList;
 
     @OneToOne(cascade =  CascadeType.ALL)

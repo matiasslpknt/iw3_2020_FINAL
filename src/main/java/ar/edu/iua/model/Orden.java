@@ -32,9 +32,6 @@ public class Orden implements Serializable {
     private Producto producto;
 
     @OneToOne(cascade =  CascadeType.ALL)
-    private OrdenDetalle ordenDetalle;
-
-    @OneToOne(cascade =  CascadeType.ALL)
     private Conciliacion conciliacion;
 
     @OneToMany(targetEntity = OrdenDetalle.class, mappedBy = "orden", fetch = FetchType.LAZY)
@@ -93,14 +90,6 @@ public class Orden implements Serializable {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
-    }
-
-    public OrdenDetalle getOrdenDetalle() {
-        return ordenDetalle;
-    }
-
-    public void setOrdenDetalle(OrdenDetalle ordenDetalle) {
-        this.ordenDetalle = ordenDetalle;
     }
 
     public Conciliacion getConciliacion() {
