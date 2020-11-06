@@ -4,17 +4,27 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="ordenDetalle")
+@Table(name = "ordenDetalle")
 
 public class OrdenDetalle implements Serializable {
 
     private static final long serialVersionUID = -2222985674134742453L;
 
+    public OrdenDetalle(double masaAcumulada, double densidad, double temperatura, double caudal, long idOrden){
+        this.masaAcumulada = masaAcumulada;
+        this.densidad = densidad;
+        this.temperatura = temperatura;
+        this.caudal = caudal;
+        this.idOrden = idOrden;
+    }
+
+    public OrdenDetalle(){
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    private String nombre;
 
     private double masaAcumulada;
 
@@ -24,22 +34,18 @@ public class OrdenDetalle implements Serializable {
 
     private double caudal;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "orden_id")
-    private Orden orden;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "orden_id")
+//    private Orden orden;
+
+    private long idOrden;
 
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public static long getSerialVersionUID() {
@@ -78,11 +84,20 @@ public class OrdenDetalle implements Serializable {
         this.caudal = caudal;
     }
 
-    public Orden getOrden() {
-        return orden;
+//    public Orden getOrden() {
+//        return orden;
+//    }
+//
+//    public void setOrden(Orden orden) {
+//        this.orden = orden;
+//    }
+
+
+    public long getIdOrden() {
+        return idOrden;
     }
 
-    public void setOrden(Orden orden) {
-        this.orden = orden;
+    public void setIdOrden(long idOrden) {
+        this.idOrden = idOrden;
     }
 }

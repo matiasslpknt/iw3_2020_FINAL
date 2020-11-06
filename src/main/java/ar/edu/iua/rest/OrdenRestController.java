@@ -4,6 +4,8 @@ import ar.edu.iua.business.IOrdenBusiness;
 import ar.edu.iua.business.exception.BusinessException;
 import ar.edu.iua.business.exception.NotFoundException;
 import ar.edu.iua.model.Orden;
+import ar.edu.iua.model.OrdenSurtidorDTO;
+import ar.edu.iua.model.Producto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class OrdenRestController extends BaseRestController {
         try {
             ordenBusiness.save(orden);
             HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("location", Constantes.URL_PRODUCTOS + "/" + orden.getId());
+            responseHeaders.set("location", Constantes.URL_ORDENES + "/" + orden.getId());
             return new ResponseEntity<String>(responseHeaders, HttpStatus.CREATED);
         } catch (BusinessException e) {
             log.error(e.getMessage(), e);
@@ -80,6 +82,20 @@ public class OrdenRestController extends BaseRestController {
             return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value = "surtidor", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Orden> actualizarSurtidor(@RequestBody OrdenSurtidorDTO ordenSurtidorDTO) {
+        Orden p = null;
+        try {
+            p = ordenBusiness.actualizarSurtidor(ordenSurtidorDTO);
+            return new ResponseEntity<Orden>(p, HttpStatus.OK);
+        } catch (BusinessException e) {
+            log.error(e.getMessage(), e);
+            return new ResponseEntity<Orden>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (NotFoundException e){
+            return new ResponseEntity<Orden>(HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name="camion")
+@Table(name = "camion")
 public class Camion implements Serializable {
 
     private static final long serialVersionUID = 4432283729174910060L;
@@ -18,16 +18,19 @@ public class Camion implements Serializable {
 
     private String dominio;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.LAZY)
     @JoinTable(name = "camion_cisterna_detalle",
             joinColumns = @JoinColumn(name = "camion_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "cisterna_id", referencedColumnName = "id"))
     private List<Cisterna> cisternaList;
 
-    @OneToOne(cascade =  CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Chofer chofer;
 
-    @OneToMany(targetEntity=Orden.class, mappedBy="camion", fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Orden.class, mappedBy = "camion", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Orden> ordenList;
 

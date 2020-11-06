@@ -9,6 +9,19 @@ import java.util.List;
 
 @Entity
 @Table(name="orden")
+@SqlResultSetMapping(
+        name="ordensurtidor",
+        classes = {
+                @ConstructorResult(
+                        columns = {
+                                @ColumnResult(name = "o.idOrden", type = String.class),
+                                @ColumnResult(name = "o.temperatura", type = String.class),
+                                @ColumnResult(name = "o.caudal", type = double.class)
+                        },
+                        targetClass = OrdenSurtidorDTO.class
+                )
+        }
+)
 public class Orden implements Serializable {
 
     private static final long serialVersionUID = -6842932053341232133L;
@@ -34,9 +47,9 @@ public class Orden implements Serializable {
     @OneToOne(cascade =  CascadeType.ALL)
     private Conciliacion conciliacion;
 
-    @OneToMany(targetEntity = OrdenDetalle.class, mappedBy = "orden", fetch = FetchType.LAZY)
-    @JsonBackReference
-    private List<OrdenDetalle> ordenDetalleList;
+//    @OneToMany(targetEntity = OrdenDetalle.class, mappedBy = "orden", fetch = FetchType.LAZY)
+//    @JsonBackReference
+//    private List<OrdenDetalle> ordenDetalleList;
 
     private double masaAcumulada;
 
@@ -100,13 +113,13 @@ public class Orden implements Serializable {
         this.conciliacion = conciliacion;
     }
 
-    public List<OrdenDetalle> getOrdenDetalleList() {
-        return ordenDetalleList;
-    }
-
-    public void setOrdenDetalleList(List<OrdenDetalle> ordenDetalleList) {
-        this.ordenDetalleList = ordenDetalleList;
-    }
+//    public List<OrdenDetalle> getOrdenDetalleList() {
+//        return ordenDetalleList;
+//    }
+//
+//    public void setOrdenDetalleList(List<OrdenDetalle> ordenDetalleList) {
+//        this.ordenDetalleList = ordenDetalleList;
+//    }
 
     public double getMasaAcumulada() {
         return masaAcumulada;

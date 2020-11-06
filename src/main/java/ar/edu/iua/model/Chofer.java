@@ -18,6 +18,7 @@ public class Chofer implements Serializable {
 
     private String apellido;
 
+    @Column(unique = true)
     private long dni;
 
     private String telefono;
