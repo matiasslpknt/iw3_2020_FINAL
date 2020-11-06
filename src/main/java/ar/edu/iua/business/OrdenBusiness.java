@@ -92,17 +92,16 @@ public class OrdenBusiness implements IOrdenBusiness {
             OrdenDetalle ordenDetalle = new OrdenDetalle(ordenSurtidorDTO.getMasaAcumulada(), densidad, ordenSurtidorDTO.getTemperatura(),caudal, orden.getId());
 
             if(orden.getFechaUltimoAlmacenamiento() != null){
-                System.out.println(orden.getFechaUltimoAlmacenamiento());
 
                 if ((dateSurtidor.getTime() - orden.getFechaUltimoAlmacenamiento().getTime()) >= 10000) {
-                    //ordenDetalleBusiness.guardar(ordenDetalle);
+                    ordenDetalleBusiness.guardar(ordenDetalle);
                     //ordenDetalleBusiness.save(ordenDetalle);
                     ordenDAO.actualizarOrdenSurtidorConFecha(orden.getId(), caudal,densidad, ordenSurtidorDTO.getTemperatura(), ordenSurtidorDTO.getMasaAcumulada(), dateSurtidor);
                 }else{
                     ordenDAO.actualizarOrdenSurtidor(orden.getId(), caudal,densidad, ordenSurtidorDTO.getTemperatura(), ordenSurtidorDTO.getMasaAcumulada());
                 }
             }else{
-                //ordenDetalleBusiness.guardar(ordenDetalle);
+                ordenDetalleBusiness.guardar(ordenDetalle);
                 //ordenDetalleBusiness.save(ordenDetalle);
                 ordenDAO.actualizarOrdenSurtidorConFecha(orden.getId(), caudal,densidad, ordenSurtidorDTO.getTemperatura(), ordenSurtidorDTO.getMasaAcumulada(), dateSurtidor);
             }

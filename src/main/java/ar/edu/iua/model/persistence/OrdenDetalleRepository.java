@@ -12,7 +12,8 @@ import java.util.Date;
 @Repository
 public interface OrdenDetalleRepository extends JpaRepository<OrdenDetalle, Long> {
 
+    @Modifying
     @Transactional
-    @Query(value = "INSERT INTO orden_detalle (caudal, densidad, id_orden, masa_acumulada, temperatura) VALUES (?2, ?3, ?1, ?5, ?4);", nativeQuery = true)
+    @Query(value = "INSERT INTO orden_detalle (id_orden, caudal, densidad, temperatura, masa_acumulada) VALUES (?, ?, ?, ?, ?);", nativeQuery = true)
     void guardarOrdenDetale(long idOrden, double caudal , double densidad, double temperatura, double masaAcumulada);
 }
